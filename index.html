@@ -1,0 +1,1288 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لعبة الروليت - تحدياتي</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #9d4edd;
+            --secondary: #ff6b6b;
+            --accent: #ffcc00;
+            --dark: #1a0933;
+            --darker: #0c0a1d;
+            --light: #f0e6ff;
+            --success: #06d6a0;
+            --selected: #ff5252;
+            --question: #4ECDC4;
+            --judgment: #9d4edd;
+            --fun: #FF6B6B;
+            --honesty: #4ECDC4;
+            --meditation: #118AB2;
+            --friends: #06D6A0;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Cairo', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, var(--darker), var(--dark));
+            color: var(--light);
+            min-height: 100vh;
+            overflow-x: hidden;
+            padding: 20px;
+            position: relative;
+        }
+        
+        body::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(157, 78, 221, 0.1) 0%, transparent 40%),
+                radial-gradient(circle at 80% 70%, rgba(255, 107, 107, 0.1) 0%, transparent 40%),
+                radial-gradient(circle at 50% 20%, rgba(255, 204, 0, 0.1) 0%, transparent 40%),
+                url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%239d4edd' fill-opacity='0.05' fill-rule='evenodd'/%3E%3C/svg%3E");
+            z-index: -1;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            text-align: center;
+            padding: 20px 0;
+            margin-bottom: 30px;
+            position: relative;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            position: relative;
+        }
+        
+        .logo::after {
+            content: "";
+            position: absolute;
+            bottom: -10px;
+            width: 200px;
+            height: 3px;
+            background: linear-gradient(to right, transparent, var(--accent), transparent);
+        }
+        
+        .logo i {
+            font-size: 2.8rem;
+            color: var(--accent);
+            text-shadow: 0 0 15px rgba(255, 204, 0, 0.7);
+            animation: pulse 2s infinite;
+        }
+        
+        .logo h1 {
+            font-size: 2.8rem;
+            background: linear-gradient(to right, var(--accent), var(--secondary), var(--primary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            letter-spacing: 1px;
+        }
+        
+        .tagline {
+            font-size: 1.3rem;
+            color: #d0d0ff;
+            margin-top: 15px;
+            font-weight: 300;
+            text-shadow: 0 0 10px rgba(208, 208, 255, 0.3);
+        }
+        
+        .category-selector {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin: 30px 0;
+        }
+        
+        .category-btn {
+            padding: 12px 25px;
+            border-radius: 50px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 1.1rem;
+        }
+        
+        .category-btn.active {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .category-btn:hover:not(.active) {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .fun-btn {
+            border-color: var(--fun);
+            background: rgba(255, 107, 107, 0.15);
+        }
+        
+        .fun-btn.active {
+            background: linear-gradient(to right, var(--fun), #ff5252);
+        }
+        
+        .honesty-btn {
+            border-color: var(--honesty);
+            background: rgba(78, 205, 196, 0.15);
+        }
+        
+        .honesty-btn.active {
+            background: linear-gradient(to right, var(--honesty), #3bbdb5);
+        }
+        
+        .meditation-btn {
+            border-color: var(--meditation);
+            background: rgba(17, 138, 178, 0.15);
+        }
+        
+        .meditation-btn.active {
+            background: linear-gradient(to right, var(--meditation), #0e7a9c);
+        }
+        
+        .friends-btn {
+            border-color: var(--friends);
+            background: rgba(6, 214, 160, 0.15);
+        }
+        
+        .friends-btn.active {
+            background: linear-gradient(to right, var(--friends), #05b38c);
+        }
+        
+        .daily-challenge {
+            background: linear-gradient(to right, #ff9a9e, #fad0c4);
+            color: var(--darker);
+            border: none;
+            padding: 14px 30px;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            margin-top: 20px;
+        }
+        
+        .daily-challenge:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+        }
+        
+        .main-content {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            justify-content: center;
+            margin-bottom: 40px;
+        }
+        
+        .participants-section {
+            background: rgba(10, 15, 50, 0.85);
+            border-radius: 20px;
+            padding: 25px;
+            width: 100%;
+            max-width: 350px;
+            box-shadow: 
+                0 10px 30px rgba(0, 0, 0, 0.6),
+                inset 0 0 20px rgba(255, 204, 0, 0.2);
+            border: 1px solid rgba(255, 204, 0, 0.4);
+            backdrop-filter: blur(10px);
+        }
+        
+        .section-title {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: var(--accent);
+            text-align: center;
+            padding-bottom: 10px;
+            border-bottom: 2px solid rgba(255, 204, 0, 0.5);
+            text-shadow: 0 0 8px rgba(255, 204, 0, 0.5);
+        }
+        
+        .input-group {
+            display: flex;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            overflow: hidden;
+            height: 50px;
+        }
+        
+        .input-group input {
+            flex: 1;
+            padding: 14px 20px;
+            border: none;
+            background: rgba(255, 255, 255, 0.08);
+            color: white;
+            font-size: 1.1rem;
+            outline: none;
+        }
+        
+        .input-group input::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+        
+        .input-group input:focus {
+            background: rgba(255, 255, 255, 0.12);
+        }
+        
+        .input-group button {
+            background: linear-gradient(to right, var(--secondary), var(--accent));
+            border: none;
+            padding: 0 20px;
+            color: white;
+            font-weight: bold;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 80px;
+        }
+        
+        .input-group button i {
+            margin-left: 8px;
+            font-size: 1.2rem;
+        }
+        
+        .input-group button:hover {
+            background: linear-gradient(to right, #ff5252, #ffb900);
+            transform: scale(1.05);
+        }
+        
+        .participants-list {
+            min-height: 200px;
+            max-height: 300px;
+            overflow-y: auto;
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 15px;
+            margin-top: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .participant-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            margin-bottom: 12px;
+            background: linear-gradient(to right, rgba(30, 40, 100, 0.7), rgba(50, 30, 100, 0.7));
+            border-radius: 10px;
+            border-left: 4px solid var(--accent);
+            animation: fadeIn 0.5s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .participant-item.selected {
+            border-left: 4px solid var(--selected);
+            background: linear-gradient(to right, rgba(255, 82, 82, 0.3), rgba(157, 78, 221, 0.3));
+            transform: scale(1.05);
+            box-shadow: 0 0 15px rgba(255, 82, 82, 0.5);
+            animation: highlight 1s ease;
+        }
+        
+        .participant-item.selected::after {
+            content: "المختار";
+            position: absolute;
+            top: 5px;
+            left: 5px;
+            background: var(--selected);
+            color: white;
+            font-size: 0.8rem;
+            padding: 2px 8px;
+            border-radius: 10px;
+        }
+        
+        .participant-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+        }
+        
+        .participant-name {
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+        
+        .remove-btn {
+            background: rgba(255, 50, 50, 0.3);
+            border: none;
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .remove-btn:hover {
+            background: rgba(255, 50, 50, 0.6);
+            transform: rotate(90deg);
+        }
+        
+        .wheel-section {
+            position: relative;
+            width: 100%;
+            max-width: 500px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .wheel-container {
+            position: relative;
+            width: 100%;
+            max-width: 450px;
+            margin: 0 auto;
+        }
+        
+        .wheel-wrapper {
+            position: relative;
+            width: 100%;
+            padding-bottom: 100%; /* للحفاظ على نسبة الطول إلى العرض */
+        }
+        
+        #wheel-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            box-shadow: 
+                0 0 50px rgba(157, 78, 221, 0.5),
+                0 0 100px rgba(107, 0, 255, 0.3),
+                inset 0 0 50px rgba(0, 0, 0, 0.5);
+            border: 12px solid rgba(255, 255, 255, 0.15);
+            background: radial-gradient(circle, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.5) 100%);
+        }
+        
+        .wheel-pointer {
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 70px;
+            background: linear-gradient(to bottom, var(--accent), #e6b800);
+            clip-path: polygon(50% 100%, 0% 0%, 100% 0%);
+            z-index: 20;
+            filter: drop-shadow(0 0 10px rgba(255, 204, 0, 0.9));
+            border-radius: 10px 10px 0 0;
+        }
+        
+        .wheel-pointer::after {
+            content: "";
+            position: absolute;
+            top: 5px;
+            left: 5px;
+            right: 5px;
+            height: 20px;
+            background: rgba(0, 0, 0, 0.2);
+            clip-path: polygon(50% 100%, 0% 0%, 100% 0%);
+        }
+        
+        .spin-btn {
+            margin-top: 40px;
+            padding: 16px 50px;
+            font-size: 1.3rem;
+            background: linear-gradient(to right, var(--secondary), var(--accent));
+            border: none;
+            border-radius: 50px;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 
+                0 5px 20px rgba(0, 0, 0, 0.4),
+                0 0 20px rgba(255, 107, 107, 0.3);
+            position: relative;
+            overflow: hidden;
+            z-index: 10;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .spin-btn::after {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -60%;
+            width: 20px;
+            height: 200%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: rotate(25deg);
+            transition: all 0.7s;
+        }
+        
+        .spin-btn:hover::after {
+            left: 120%;
+        }
+        
+        .spin-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 
+                0 8px 25px rgba(0, 0, 0, 0.5),
+                0 0 30px rgba(255, 107, 107, 0.5);
+        }
+        
+        .spin-btn:disabled {
+            background: linear-gradient(to right, #777, #999);
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        .result-section {
+            background: rgba(10, 15, 50, 0.85);
+            border-radius: 20px;
+            padding: 25px;
+            width: 100%;
+            max-width: 350px;
+            box-shadow: 
+                0 10px 30px rgba(0, 0, 0, 0.6),
+                inset 0 0 20px rgba(255, 204, 0, 0.2);
+            border: 1px solid rgba(255, 204, 0, 0.4);
+            backdrop-filter: blur(10px);
+        }
+        
+        .result-content {
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 15px;
+            min-height: 300px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .result-title {
+            font-size: 1.5rem;
+            color: var(--accent);
+            margin-bottom: 20px;
+            text-shadow: 0 0 5px rgba(255, 204, 0, 0.5);
+        }
+        
+        .result-name {
+            font-size: 2.2rem;
+            margin: 15px 0;
+            color: var(--selected);
+            text-shadow: 0 0 10px rgba(255, 107, 107, 0.5);
+            padding: 10px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            border: 1px solid var(--selected);
+            animation: pulse 2s infinite;
+        }
+        
+        .result-text {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            margin: 15px 0;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            min-height: 80px;
+            text-align: right;
+        }
+        
+        .question-text {
+            border-left: 3px solid var(--question);
+            background: rgba(78, 205, 196, 0.1);
+        }
+        
+        .judgment-text {
+            border-left: 3px solid var(--judgment);
+            background: rgba(157, 78, 221, 0.1);
+        }
+        
+        .result-label {
+            color: var(--accent);
+            font-weight: bold;
+            margin-top: 15px;
+            font-size: 1.3rem;
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .action-btn {
+            flex: 1;
+            padding: 12px;
+            border-radius: 8px;
+            border: none;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .complete-btn {
+            background: linear-gradient(to right, var(--success), #05b38c);
+        }
+        
+        .skip-btn {
+            background: linear-gradient(to right, #6c757d, #5a6268);
+        }
+        
+        .action-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .social-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .social-btn {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 14px 30px;
+            border-radius: 50px;
+            font-weight: bold;
+            text-decoration: none;
+            color: white;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            z-index: 10;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .telegram-btn {
+            background: linear-gradient(to right, #0088cc, #0077b3);
+        }
+        
+        .instagram-btn {
+            background: linear-gradient(to right, #833ab4, #fd1d1d, #fcb045);
+        }
+        
+        .social-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+        }
+        
+        footer {
+            text-align: center;
+            padding: 30px 0;
+            margin-top: 40px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        .about-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 204, 0, 0.3);
+            color: white;
+            padding: 12px 25px;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+            margin-top: 15px;
+        }
+        
+        .about-btn:hover {
+            background: rgba(255, 204, 0, 0.2);
+            transform: translateY(-3px);
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 100;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-content {
+            background: linear-gradient(to bottom right, #1a2a6c, #b21f1f);
+            border-radius: 20px;
+            padding: 30px;
+            max-width: 600px;
+            width: 90%;
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.7);
+            border: 2px solid rgba(255, 204, 0, 0.5);
+            position: relative;
+        }
+        
+        .close-btn {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(255, 0, 0, 0.3);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .close-btn:hover {
+            background: rgba(255, 0, 0, 0.6);
+        }
+        
+        .modal-title {
+            font-size: 2rem;
+            color: #ffcc00;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .modal-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 25px;
+        }
+        
+        .ripple {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.4);
+            transform: scale(0);
+            animation: rippleEffect 0.6s linear;
+            pointer-events: none;
+        }
+        
+        @keyframes rippleEffect {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes highlight {
+            0% { transform: scale(1); box-shadow: 0 0 0 rgba(255, 82, 82, 0); }
+            50% { transform: scale(1.05); box-shadow: 0 0 20px rgba(255, 82, 82, 0.8); }
+            100% { transform: scale(1.03); box-shadow: 0 0 10px rgba(255, 82, 82, 0.5); }
+        }
+        
+        @media (max-width: 768px) {
+            .main-content {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .participants-section, .result-section {
+                max-width: 100%;
+            }
+            
+            .logo h1 {
+                font-size: 2rem;
+            }
+            
+            .category-selector {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .category-btn {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <i class="fas fa-dice"></i>
+                <h1>تحدياتي - لعبة الروليت</h1>
+            </div>
+            <p class="tagline">اللعبة الأكثر تشويقاً وإحراجاً مع أصدقائك!</p>
+            
+            <div class="category-selector">
+                <button class="category-btn fun-btn active" data-category="fun">
+                    <i class="fas fa-face-grin-squint-tears"></i> الجنون المرح
+                </button>
+                <button class="category-btn honesty-btn" data-category="honesty">
+                    <i class="fas fa-fire"></i> الصراحة المجنونة
+                </button>
+                <button class="category-btn meditation-btn" data-category="meditation">
+                    <i class="fas fa-moon"></i> التأمل العميق
+                </button>
+                <button class="category-btn friends-btn" data-category="friends">
+                    <i class="fas fa-users"></i> لك ولأصدقائك
+                </button>
+            </div>
+            
+            <button class="daily-challenge">
+                <i class="fas fa-calendar-star"></i> تحديات اليوم - هل تجرؤ؟
+            </button>
+        </header>
+        
+        <div class="main-content">
+            <div class="participants-section">
+                <h2 class="section-title">المشاركون</h2>
+                <div class="input-group">
+                    <input type="text" id="participant-name" placeholder="أدخل اسم المشارك">
+                    <button id="add-participant"><i class="fas fa-plus"></i> إضافة</button>
+                </div>
+                <div class="participants-list" id="participants-list">
+                    <!-- سيتم إضافة المشاركين هنا -->
+                </div>
+            </div>
+            
+            <div class="wheel-section">
+                <div class="wheel-container">
+                    <div class="wheel-wrapper">
+                        <canvas id="wheel-canvas"></canvas>
+                    </div>
+                    <div class="wheel-pointer"></div>
+                </div>
+                <button class="spin-btn" id="spin-btn">دوران الروليت!</button>
+            </div>
+            
+            <div class="result-section">
+                <h2 class="section-title">نتيجة التحدي</h2>
+                <div class="result-content" id="result-content">
+                    <p>قم بإضافة المشاركين ثم اضغط على زر الدوران</p>
+                </div>
+                <div class="action-buttons">
+                    <button class="action-btn complete-btn">تم التنفيذ</button>
+                    <button class="action-btn skip-btn">تخطي التحدي</button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="social-buttons">
+            <a href="https://t.me/hoopis_6" class="social-btn telegram-btn" target="_blank">
+                <i class="fab fa-telegram"></i> تواصل عبر تلجرام
+            </a>
+            <a href="https://instagram.com/_92vt" class="social-btn instagram-btn" target="_blank">
+                <i class="fab fa-instagram"></i> تابعنا على إنستجرام
+            </a>
+        </div>
+        
+        <footer>
+            <p>© 2023 تحدياتي - جميع الحقوق محفوظة</p>
+            <button class="about-btn" id="about-btn">عن الموقع</button>
+        </footer>
+    </div>
+    
+    <div class="modal" id="about-modal">
+        <div class="modal-content">
+            <button class="close-btn" id="close-modal"><i class="fas fa-times"></i></button>
+            <h2 class="modal-title">عن لعبة تحدياتي</h2>
+            <p class="modal-text">
+                "تحدياتي" هي لعبة روليت ممتعة ومثيرة تهدف إلى إضفاء جو من المرح والتحدي بين الأصدقاء والعائلة. تقوم اللعبة بتوزيع المشاركين على عجلة الروليت الملونة، وعند الضغط على زر الدوران، يتم اختيار أحد المشاركين عشوائياً ليواجه سؤالاً محرجاً أو تحدياً ممتعاً.
+            </p>
+            <p class="modal-text">
+                تم تطوير هذا الموقع بواسطة <strong>أحمد</strong> بهدف إدخال البهجة والمرح على التجمعات العائلية واللقاءات مع الأصدقاء. فكرة اللعبة مستوحاة من الرغبة في كسر الحواجز بين الأفراد وتعزيز روح المرح والتحدي.
+            </p>
+            <p class="modal-text">
+                إذا واجهتك أي مشكلة أو كان لديك أي اقتراح، لا تتردد في التواصل معنا عبر وسائل التواصل المتوفرة.
+            </p>
+        </div>
+    </div>
+
+    <audio id="spin-sound" src="https://assets.mixkit.co/sfx/preview/mixkit-slot-machine-spin-1044.mp3"></audio>
+    <audio id="win-sound" src="https://assets.mixkit.co/sfx/preview/mixkit-winning-chimes-2015.mp3"></audio>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // مصفوفة المشاركين
+            let participants = [];
+            const colors = [
+                '#FF6B6B', '#4ECDC4', '#FFD166', '#118AB2', '#06D6A0',
+                '#EF476F', '#FFC43D', '#1B9AAA', '#9B5DE5', '#00BBF9',
+                '#F15BB5', '#FEE440', '#00F5D4', '#9B5DE5', '#00BBF9'
+            ];
+            
+            // الأسئلة والأحكام لكل فئة
+            const wheelsData = {
+                fun: {
+                    title: "الجنون المرح",
+                    icon: "fa-face-grin-squint-tears",
+                    questions: [
+                        "ارقص رقصة مضحكة لمدة دقيقة كاملة يا {name}!",
+                        "يا {name}، قلب ملابسك وارتدها بالمقلوب لمدة 10 دقائق",
+                        "يا {name}، قل كل جملة بصوت دمية لمدة 5 دقائق",
+                        "يا {name}، اتصل بصديق وقل له أنك تحبه بدون أي مقدمات",
+                        "انثر ملح على لسانك يا {name} ولا تشرب لمدة دقيقتين",
+                        "يا {name}، قلب وجهك بالكامل بالماكياج لمدة ساعة",
+                        "يا {name}، قل 10 مدائح غريبة لأقرب شخص لك",
+                        "يا {name}، امشِ كالدمية لمدة 5 دقائق",
+                        "يا {name}، تظاهر بأنك كلب لمدة دقيقتين",
+                        "يا {name}، غيّر صورتك على وسائل التواصل إلى صورة محرجة لمدة 24 ساعة",
+                        "يا {name}، قل كل جملة كأنك بحر شديد لمدة 10 دقائق",
+                        "يا {name}، ارسم شارباً بقلم دائم على وجهك لبقية اليوم",
+                        "يا {name}، اطلب من الغرباء أن يوقّعوا على قميصك",
+                        "يا {name}، قلب حرف السين إلى شين في كل كلمة لمدة 10 دقائق",
+                        "يا {name}، اتصل بصديق وغنّ له أغنية أطفال",
+                        "يا {name}، امشِ إلى الخلف في كل تحركاتك لمدة 15 دقيقة",
+                        "يا {name}، أطعم الشخص الذي بجانبك وأنت معصوب العينين",
+                        "يا {name}، انشر منشوراً على وسائل التواصل بأنك تحب البروكلي",
+                        "يا {name}، تحدث بلكنة أجنبية لمدة 30 دقيقة",
+                        "يا {name}، اربط شعرك بأغرب طريقة ممكنة لبقية الجلسة",
+                        "يا {name}، اشرب كوب ماء وأنت واقف على رأسك (بمساعدة الآخرين)",
+                        "يا {name}، تظاهر بأنك روبوت في كل تحركاتك لمدة 10 دقائق",
+                        "يا {name}، انقل كل شيء تقوله بطريقة غنائية لمدة 15 دقيقة",
+                        "يا {name}، تحدث بصوت عالٍ جداً لمدة 5 دقائق",
+                        "يا {name}، قلب كل كلمة تقولها رأساً على عقب لمدة 10 دقائق",
+                        "يا {name}، امسح أرضية الغرفة بمنشفة وقدميك",
+                        "يا {name}، احمل الشخص الأصغر في المجموعة لمدة دقيقتين",
+                        "يا {name}، انشر صورة طفولتك المحرجة على وسائل التواصل",
+                        "يا {name}، اختبئ في الخزانة لمدة 5 دقائق",
+                        "يا {name}، قلب حذائك وارتديه على اليدين لمدة 10 دقائق"
+                    ],
+                    judgments: [
+                        "يا {name}، قفز 10 مرات على قدم واحدة وأنت تغني النشيد الوطني",
+                        "يا {name}، أرسل رسالة حب لأول شخص في قائمة جهات الاتصال لديك",
+                        "يا {name}، قلب وجهك بالكامل بالماكياج لمدة ساعة",
+                        "يا {name}، اردع رقصة البطريق لمدة دقيقتين",
+                        "يا {name}، انثر ملح على لسانك ولا تشرب لمدة 5 دقائق",
+                        "يا {name}، ارتدِ ملابسك بالمقلوب لمدة ساعة",
+                        "يا {name}، قل 10 مدائح غريبة لأقرب شخص لك",
+                        "يا {name}، امشِ كالدمية لمدة 5 دقائق",
+                        "يا {name}، تظاهر بأنك كلب لمدة دقيقتين",
+                        "يا {name}، غيّر صورتك على وسائل التواصل إلى صورة محرجة لمدة 24 ساعة"
+                    ]
+                },
+                honesty: {
+                    title: "الصراحة المجنونة",
+                    icon: "fa-fire",
+                    questions: [
+                        "يا {name}، ما هو أكثر شيء تخجل منه في حياتك؟",
+                        "يا {name}، ما هو أكبر سر أخفيته عن أصدقائك؟",
+                        "يا {name}، ما هو أكثر كذبة قلتها لوالديك؟",
+                        "يا {name}، ما هو الشيء الذي تخاف أن يعرفه الناس عنك؟",
+                        "يا {name}، ما هو أسوأ شيء فعلته لتحصل على شيء تريده؟",
+                        "يا {name}، ما هو الشيء الذي تتمنى أن تغيره في شخصيتك؟",
+                        "يا {name}، ما هو أكثر موقف محرج مررت به في حياتك؟",
+                        "يا {name}، ما هو الشيء الذي تخجل من الاعتراف بأنك لا تعرفه؟",
+                        "يا {name}، ما هو أسوأ قرار اتخذته في حياتك؟",
+                        "يا {name}، ما هو الشيء الذي تخجل من الاعتراف بأنك تحبه؟",
+                        "يا {name}، ما هو أكثر شيء تندم عليه في حياتك؟",
+                        "يا {name}، ما هو الشيء الذي تتمنى أن تقوله لشخص ما لكنك لا تجرؤ؟",
+                        "يا {name}، ما هو أسوأ صفة في شخصيتك؟",
+                        "يا {name}، ما هو الشيء الذي تخشى الاعتراف بأنك تخاف منه؟",
+                        "يا {name}، ما هو الشيء الذي تتمنى أن يغفره لك الآخرون؟"
+                    ],
+                    judgments: [
+                        "يا {name}، شارك سراً لم يسمع به أحد من قبل",
+                        "يا {name}، اعترف بثلاثة أخطاء ارتكبتها في الماضي",
+                        "يا {name}، قل الحقيقة الكاملة عن مشاعرك تجاه شخص في المجموعة",
+                        "يا {name}، اعترف بثلاثة أشياء تخجل منها في نفسك",
+                        "يا {name}، شارك قصة محرجة لم تخبر بها أحداً من قبل",
+                        "يا {name}، قل الحقيقة حول ما تشعر به تجاه هذا التحدي"
+                    ]
+                },
+                meditation: {
+                    title: "التأمل العميق",
+                    icon: "fa-moon",
+                    questions: [
+                        "يا {name}، ما هو المعنى الحقيقي للسعادة بالنسبة لك؟",
+                        "يا {name}، ما هو الشيء الذي تتمنى أن يتذكره الناس عنك بعد رحيلك؟",
+                        "يا {name}، ما هو الدرس الأهم الذي تعلمته في حياتك؟",
+                        "يا {name}، ما هو الشيء الذي يجعلك تشعر بالرضا عن نفسك؟",
+                        "يا {name}، ما هو الحلم الذي تخليت عنه ولماذا؟",
+                        "يا {name}، ما هو الشيء الذي تتمنى أن تغيره في العالم؟",
+                        "يا {name}، ما هو التحدي الأكبر الذي واجهته في حياتك؟",
+                        "يا {name}، ما هو الشيء الذي تعلمته عن نفسك خلال العام الماضي؟",
+                        "يا {name}، ما هو الشيء الذي تتمنى أن تعرفه قبل 10 سنوات؟",
+                        "يا {name}، ما هو تعريف النجاح بالنسبة لك؟"
+                    ],
+                    judgments: [
+                        "يا {name}، شارك الجميع بتجربة غيرت حياتك",
+                        "يا {name}، اكتب ثلاثة أشياء تشعر بالامتنان لها في حياتك",
+                        "يا {name}، تأمل لمدة دقيقتين بصمت مع المجموعة",
+                        "يا {name}، شارك حكمة تعلمتها من تجربة صعبة",
+                        "يا {name}، اقرأ اقتباساً ملهمًا يعبر عن فلسفتك في الحياة",
+                        "يا {name}، اكتب رسالة لنفسك في المستقبل"
+                    ]
+                },
+                friends: {
+                    title: "لك ولأصدقائك",
+                    icon: "fa-users",
+                    questions: [
+                        "يا {name}، ما هو أفضل ذكرياتكم معاً؟",
+                        "يا {name}، ما هو الشيء الذي تتمنى أن تجربوه معاً؟",
+                        "يا {name}، ما هو التحدي الذي تعتقدون أنكم ستواجهونه معاً؟",
+                        "يا {name}، ما هو الشيء الذي يعجبكم في بعضكم البعض؟",
+                        "يا {name}، ما هو الحلم الذي تتمنى أن تحققوه معاً؟"
+                    ],
+                    judgments: [
+                        "يا {name}، قوموا ببناء أطول برج ممكن من الأكواب في دقيقة واحدة",
+                        "يا {name}، اصنعوا سلسلة بشرية بطول الغرفة",
+                        "يا {name}، قوموا بأداء رقصة جماعية لمدة دقيقتين",
+                        "يا {name}، غنيوا أغنية معاً بدون موسيقى",
+                        "يا {name}، اصنعوا لوحة فنية جماعية باستخدام أدوات بسيطة"
+                    ]
+                }
+            };
+
+            // الفئة الحالية للعجلة
+            let currentCategory = 'fun';
+            let selectedParticipantIndex = -1;
+            
+            // عناصر DOM
+            const participantInput = document.getElementById('participant-name');
+            const addParticipantBtn = document.getElementById('add-participant');
+            const participantsList = document.getElementById('participants-list');
+            const canvas = document.getElementById('wheel-canvas');
+            const ctx = canvas.getContext('2d');
+            const spinBtn = document.getElementById('spin-btn');
+            const resultContent = document.getElementById('result-content');
+            const aboutBtn = document.getElementById('about-btn');
+            const aboutModal = document.getElementById('about-modal');
+            const closeModal = document.getElementById('close-modal');
+            const spinSound = document.getElementById('spin-sound');
+            const winSound = document.getElementById('win-sound');
+            const categoryBtns = document.querySelectorAll('.category-btn');
+            
+            // إعداد Canvas
+            function setupCanvas() {
+                const wrapper = document.querySelector('.wheel-wrapper');
+                const size = Math.min(wrapper.offsetWidth, wrapper.offsetHeight);
+                
+                canvas.width = size;
+                canvas.height = size;
+                
+                renderWheel();
+            }
+            
+            // إضافة تأثير التموج للأزرار
+            document.querySelectorAll('button, .social-btn').forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    const ripple = document.createElement('span');
+                    ripple.classList.add('ripple');
+                    const rect = this.getBoundingClientRect();
+                    const size = Math.max(rect.width, rect.height);
+                    const x = e.clientX - rect.left - size / 2;
+                    const y = e.clientY - rect.top - size / 2;
+                    
+                    ripple.style.width = ripple.style.height = `${size}px`;
+                    ripple.style.left = `${x}px`;
+                    ripple.style.top = `${y}px`;
+                    
+                    this.appendChild(ripple);
+                    
+                    setTimeout(() => {
+                        ripple.remove();
+                    }, 600);
+                });
+            });
+            
+            // اختيار الفئة
+            categoryBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    // إزالة الفئة النشطة من جميع الأزرار
+                    categoryBtns.forEach(b => b.classList.remove('active'));
+                    
+                    // إضافة الفئة النشطة للزر المضغوط
+                    this.classList.add('active');
+                    
+                    // تحديث الفئة الحالية
+                    currentCategory = this.getAttribute('data-category');
+                    
+                    // تحديث واجهة المستخدم إذا لزم الأمر
+                    const categoryData = wheelsData[currentCategory];
+                    document.querySelector('.tagline').textContent = `عجلة ${categoryData.title} - ${categoryData.questions.length} تحديات`;
+                });
+            });
+            
+            // وظيفة إضافة مشارك - معدلة
+            function addParticipant() {
+                const name = participantInput.value.trim();
+                if (name && participants.length < 15) {
+                    participants.push(name);
+                    participantInput.value = '';
+                    renderParticipants();
+                    renderWheel();
+                    
+                    // إضافة ملاحظة مرئية
+                    addParticipantBtn.style.backgroundColor = '#4CAF50';
+                    setTimeout(() => {
+                        addParticipantBtn.style.backgroundColor = '';
+                    }, 300);
+                } else if (participants.length >= 15) {
+                    alert('لقد وصلت للحد الأقصى من المشاركين (15)');
+                } else if (!name) {
+                    alert('الرجاء إدخال اسم المشارك');
+                }
+                
+                // إعادة التركيز على حقل الإدخال
+                participantInput.focus();
+            }
+            
+            // ربط حدث الإضافة بالزر
+            addParticipantBtn.addEventListener('click', addParticipant);
+            
+            // السماح بالإضافة باستخدام مفتاح Enter - معدل
+            participantInput.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter') {
+                    addParticipant();
+                }
+            });
+            
+            // عرض قائمة المشاركين
+            function renderParticipants() {
+                participantsList.innerHTML = '';
+                participants.forEach((participant, index) => {
+                    const participantItem = document.createElement('div');
+                    participantItem.className = 'participant-item';
+                    if (index === selectedParticipantIndex) {
+                        participantItem.classList.add('selected');
+                    }
+                    participantItem.innerHTML = `
+                        <span class="participant-name">${participant}</span>
+                        <button class="remove-btn" data-index="${index}">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    `;
+                    participantsList.appendChild(participantItem);
+                });
+                
+                // إضافة مستمعات الأحداث لأزرار الحذف
+                document.querySelectorAll('.remove-btn').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const index = parseInt(this.getAttribute('data-index'));
+                        participants.splice(index, 1);
+                        if (selectedParticipantIndex === index) {
+                            selectedParticipantIndex = -1;
+                        } else if (selectedParticipantIndex > index) {
+                            selectedParticipantIndex--;
+                        }
+                        renderParticipants();
+                        renderWheel();
+                    });
+                });
+            }
+            
+            // عرض العجلة بالأسماء بشكل دائري منتظم
+            function renderWheel() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                
+                if (participants.length === 0) {
+                    ctx.fillStyle = 'rgba(0, 0, 0, 0.3)';
+                    ctx.beginPath();
+                    ctx.arc(canvas.width/2, canvas.height/2, canvas.width/2 - 20, 0, Math.PI * 2);
+                    ctx.fill();
+                    
+                    ctx.font = 'bold 20px Cairo';
+                    ctx.textAlign = 'center';
+                    ctx.fillStyle = 'white';
+                    ctx.fillText('أضف مشاركين لبدء اللعبة', canvas.width/2, canvas.height/2);
+                    spinBtn.disabled = true;
+                    return;
+                }
+                
+                spinBtn.disabled = false;
+                
+                const centerX = canvas.width / 2;
+                const centerY = canvas.height / 2;
+                const radius = Math.min(centerX, centerY) - 20;
+                const segmentAngle = (Math.PI * 2) / participants.length;
+                
+                // رسم الشرائح
+                for (let i = 0; i < participants.length; i++) {
+                    const startAngle = i * segmentAngle;
+                    const endAngle = (i + 1) * segmentAngle;
+                    
+                    // رسم الشريحة
+                    ctx.beginPath();
+                    ctx.moveTo(centerX, centerY);
+                    ctx.arc(centerX, centerY, radius, startAngle, endAngle);
+                    ctx.closePath();
+                    
+                    // تمييز المشارك المختار بلون مختلف
+                    ctx.fillStyle = (i === selectedParticipantIndex) ? '#ff5252' : colors[i % colors.length];
+                    ctx.fill();
+                    ctx.strokeStyle = 'rgba(255, 255, 255, 0.3)';
+                    ctx.lineWidth = 2;
+                    ctx.stroke();
+                    
+                    // رسم النص بشكل دائري
+                    const textAngle = startAngle + segmentAngle / 2;
+                    const textRadius = radius * 0.7;
+                    const textX = centerX + Math.cos(textAngle) * textRadius;
+                    const textY = centerY + Math.sin(textAngle) * textRadius;
+                    
+                    ctx.save();
+                    ctx.translate(textX, textY);
+                    ctx.rotate(textAngle + Math.PI / 2);
+                    
+                    ctx.font = 'bold 16px Cairo';
+                    ctx.textAlign = 'center';
+                    ctx.fillStyle = 'white';
+                    ctx.textBaseline = 'middle';
+                    
+                    // تقصير النص إذا كان طويلاً
+                    let displayName = participants[i];
+                    if (displayName.length > 12) {
+                        displayName = displayName.substring(0, 10) + '...';
+                    }
+                    
+                    ctx.fillText(displayName, 0, 0);
+                    ctx.restore();
+                }
+                
+                // رسم المركز
+                ctx.beginPath();
+                ctx.arc(centerX, centerY, radius * 0.1, 0, Math.PI * 2);
+                ctx.fillStyle = 'gold';
+                ctx.fill();
+                ctx.strokeStyle = 'rgba(0, 0, 0, 0.5)';
+                ctx.lineWidth = 3;
+                ctx.stroke();
+            }
+            
+            // تدوير العجلة
+            spinBtn.addEventListener('click', function() {
+                if (participants.length < 2) {
+                    alert('أضف مشاركين على الأقل لبدء اللعبة!');
+                    return;
+                }
+                
+                spinBtn.disabled = true;
+                spinSound.play();
+                
+                // توليد دوران عشوائي (على الأقل 5 دورات كاملة)
+                const spins = 5 + Math.floor(Math.random() * 3);
+                const segmentAngle = (Math.PI * 2) / participants.length;
+                
+                // إعادة تعيين المشارك المختار
+                selectedParticipantIndex = -1;
+                renderParticipants();
+                renderWheel();
+                
+                // حساب الدوران النهائي
+                const finalRotation = spins * (Math.PI * 2) + (Math.random() * segmentAngle);
+                
+                // تطبيق الدوران مع الحركة
+                let currentRotation = 0;
+                const duration = 4000; // 4 ثواني
+                const startTime = Date.now();
+                
+                function rotateWheel() {
+                    const elapsed = Date.now() - startTime;
+                    const progress = Math.min(elapsed / duration, 1);
+                    
+                    // استخدام دالة التلطيف (easeOutCubic)
+                    const easeProgress = 1 - Math.pow(1 - progress, 3);
+                    
+                    currentRotation = easeProgress * finalRotation;
+                    
+                    // تطبيق التحويل
+                    ctx.save();
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    ctx.translate(canvas.width/2, canvas.height/2);
+                    ctx.rotate(currentRotation);
+                    ctx.translate(-canvas.width/2, -canvas.height/2);
+                    
+                    renderWheel();
+                    ctx.restore();
+                    
+                    if (progress < 1) {
+                        requestAnimationFrame(rotateWheel);
+                    } else {
+                        winSound.play();
+                        
+                        // حساب المشارك المختار بناءً على الزاوية النهائية
+                        const normalizedAngle = (currentRotation % (Math.PI * 2) + Math.PI * 2) % (Math.PI * 2);
+                        selectedParticipantIndex = Math.floor(normalizedAngle / segmentAngle) % participants.length;
+                        
+                        // عرض النتيجة
+                        showResult();
+                        renderParticipants();
+                        renderWheel();
+                        
+                        spinBtn.disabled = false;
+                    }
+                }
+                
+                rotateWheel();
+            });
+            
+            // عرض النتيجة
+            function showResult() {
+                if (selectedParticipantIndex < 0 || selectedParticipantIndex >= participants.length) {
+                    resultContent.innerHTML = '<p>حدث خطأ في اختيار المشارك</p>';
+                    return;
+                }
+                
+                const participantName = participants[selectedParticipantIndex];
+                const categoryData = wheelsData[currentCategory];
+                
+                // اختيار سؤال وحكم عشوائيين
+                const randomQuestion = categoryData.questions[Math.floor(Math.random() * categoryData.questions.length)]
+                    .replace('{name}', participantName);
+                
+                const randomJudgment = categoryData.judgments[Math.floor(Math.random() * categoryData.judgments.length)]
+                    .replace('{name}', participantName);
+                
+                resultContent.innerHTML = `
+                    <p class="result-label">المشارك المختار:</p>
+                    <p class="result-name">${participantName}</p>
+                    
+                    <p class="result-label">السؤال:</p>
+                    <p class="result-text ques
